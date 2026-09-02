@@ -613,6 +613,8 @@
                     <a href="#flights" class="text-sm font-medium hover:text-cyan-400 transition-all hover:scale-110">Flights</a>
                     <a href="#hotels" class="text-sm font-medium hover:text-cyan-400 transition-all hover:scale-110">Hotels</a>
                     <a href="#attractions" class="text-sm font-medium hover:text-cyan-400 transition-all hover:scale-110">Attractions</a>
+                    <a href="#weather" class="text-sm font-medium hover:text-cyan-400 transition-all hover:scale-110">Weather</a>
+                    <a href="#maps" class="text-sm font-medium hover:text-cyan-400 transition-all hover:scale-110">Maps</a>
                 </div>
             </div>
         </div>
@@ -1162,6 +1164,47 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Weather & Best Time to Visit Section -->
+        <section id="weather" class="space-y-8">
+            <div class="text-center" data-aos="fade-up">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-3 gradient-text">Weather & Best Time to Visit</h2>
+                <p class="text-slate-400 text-lg">Plan your perfect trip with current weather and seasonal insights</p>
+            </div>
+
+            <!-- Weather Tabs -->
+            <div class="flex flex-wrap gap-3 justify-center" data-aos="fade-up" data-aos-delay="100">
+                <button onclick="switchWeatherTab('phuket')" id="weather-tab-phuket" class="tab-active px-8 py-4 rounded-xl font-bold transition-all text-base">
+                    🏖️ Phuket Weather
+                </button>
+                <button onclick="switchWeatherTab('krabi')" id="weather-tab-krabi" class="px-8 py-4 rounded-xl font-bold bg-slate-800 bg-opacity-50 hover:bg-slate-700 transition-all text-base">
+                    ⛰️ Krabi Weather
+                </button>
+                <button onclick="switchWeatherTab('bangkok')" id="weather-tab-bangkok" class="px-8 py-4 rounded-xl font-bold bg-slate-800 bg-opacity-50 hover:bg-slate-700 transition-all text-base">
+                    🏙️ Bangkok Weather
+                </button>
+            </div>
+
+            <!-- Weather Content -->
+            <div id="weather-content" class="glass-card premium-card rounded-3xl p-8" data-aos="zoom-in">
+                <!-- Content will be dynamically inserted -->
+            </div>
+
+            <!-- Best Time to Visit Tabs -->
+            <div class="flex flex-wrap gap-3 justify-center" data-aos="fade-up" data-aos-delay="200">
+                <button onclick="switchBestTimeTab('budget')" id="besttime-tab-budget" class="tab-active px-8 py-4 rounded-xl font-bold transition-all text-base">
+                    💰 Lowest Budget Times
+                </button>
+                <button onclick="switchBestTimeTab('weather')" id="besttime-tab-weather" class="px-8 py-4 rounded-xl font-bold bg-slate-800 bg-opacity-50 hover:bg-slate-700 transition-all text-base">
+                    ☀️ Great Weather Times
+                </button>
+            </div>
+
+            <!-- Best Time Content -->
+            <div id="besttime-content" class="glass-card premium-card rounded-3xl p-8" data-aos="zoom-in">
+                <!-- Content will be dynamically inserted -->
             </div>
         </section>
 
@@ -1872,6 +1915,429 @@
             initFlightDatePicker();
             renderAttractions('phuket');
             updateNightInputs();
+        });
+    </script>
+
+    <script>
+        // ========================================
+        // WEATHER & BEST TIME TO VISIT DATA & FUNCTIONS
+        // ========================================
+
+        // Weather data for all three destinations
+        const weatherData = {
+            phuket: {
+                current: {
+                    temp: 29,
+                    condition: 'Partly Cloudy',
+                    humidity: 78,
+                    wind: 15,
+                    rainChance: 35,
+                    uvIndex: 8,
+                    icon: 'cloud-sun'
+                },
+                seasons: {
+                    peak: { name: 'November - April', desc: 'Dry Season', rain: '5%', temp: '28-32°C', ideal: true },
+                    monsoon: { name: 'May - October', desc: 'Monsoon Season', rain: '85%', temp: '26-30°C', ideal: false },
+                    shoulder: { name: 'May & October', desc: 'Shoulder Months', rain: '50%', temp: '27-31°C', ideal: false }
+                },
+                monthlyData: [
+                    { month: 'Jan', temp: 28, rain: 20, tourists: 85, budget: 'medium' },
+                    { month: 'Feb', temp: 29, rain: 15, tourists: 90, budget: 'high' },
+                    { month: 'Mar', temp: 30, rain: 25, tourists: 80, budget: 'medium' },
+                    { month: 'Apr', temp: 31, rain: 50, tourists: 65, budget: 'low' },
+                    { month: 'May', temp: 30, rain: 75, tourists: 40, budget: 'very_low' },
+                    { month: 'Jun', temp: 29, rain: 80, tourists: 35, budget: 'very_low' },
+                    { month: 'Jul', temp: 28, rain: 82, tourists: 40, budget: 'very_low' },
+                    { month: 'Aug', temp: 28, rain: 78, tourists: 45, budget: 'very_low' },
+                    { month: 'Sep', temp: 28, rain: 85, tourists: 35, budget: 'very_low' },
+                    { month: 'Oct', temp: 28, rain: 70, tourists: 50, budget: 'low' },
+                    { month: 'Nov', temp: 28, rain: 35, tourists: 75, budget: 'medium' },
+                    { month: 'Dec', temp: 27, rain: 20, tourists: 95, budget: 'high' }
+                ]
+            },
+            krabi: {
+                current: {
+                    temp: 30,
+                    condition: 'Sunny',
+                    humidity: 75,
+                    wind: 12,
+                    rainChance: 25,
+                    uvIndex: 9,
+                    icon: 'sun'
+                },
+                seasons: {
+                    peak: { name: 'November - April', desc: 'Dry Season', rain: '8%', temp: '27-32°C', ideal: true },
+                    monsoon: { name: 'May - October', desc: 'Rainy Season', rain: '80%', temp: '26-30°C', ideal: false },
+                    shoulder: { name: 'May & October', desc: 'Transition', rain: '55%', temp: '27-31°C', ideal: false }
+                },
+                monthlyData: [
+                    { month: 'Jan', temp: 28, rain: 15, tourists: 80, budget: 'medium' },
+                    { month: 'Feb', temp: 29, rain: 10, tourists: 85, budget: 'high' },
+                    { month: 'Mar', temp: 31, rain: 20, tourists: 75, budget: 'medium' },
+                    { month: 'Apr', temp: 32, rain: 45, tourists: 60, budget: 'low' },
+                    { month: 'May', temp: 30, rain: 70, tourists: 35, budget: 'very_low' },
+                    { month: 'Jun', temp: 29, rain: 78, tourists: 30, budget: 'very_low' },
+                    { month: 'Jul', temp: 28, rain: 75, tourists: 35, budget: 'very_low' },
+                    { month: 'Aug', temp: 28, rain: 72, tourists: 40, budget: 'very_low' },
+                    { month: 'Sep', temp: 28, rain: 82, tourists: 30, budget: 'very_low' },
+                    { month: 'Oct', temp: 27, rain: 65, tourists: 45, budget: 'low' },
+                    { month: 'Nov', temp: 28, rain: 40, tourists: 70, budget: 'medium' },
+                    { month: 'Dec', temp: 27, rain: 18, tourists: 90, budget: 'high' }
+                ]
+            },
+            bangkok: {
+                current: {
+                    temp: 32,
+                    condition: 'Hot & Humid',
+                    humidity: 82,
+                    wind: 8,
+                    rainChance: 45,
+                    uvIndex: 10,
+                    icon: 'sun'
+                },
+                seasons: {
+                    peak: { name: 'November - March', desc: 'Cool & Dry', rain: '10%', temp: '26-32°C', ideal: true },
+                    hot: { name: 'April - May', desc: 'Hot Season', rain: '25%', temp: '30-38°C', ideal: false },
+                    monsoon: { name: 'June - October', desc: 'Rainy Season', rain: '75%', temp: '27-32°C', ideal: false }
+                },
+                monthlyData: [
+                    { month: 'Jan', temp: 27, rain: 10, tourists: 70, budget: 'medium' },
+                    { month: 'Feb', temp: 28, rain: 8, tourists: 75, budget: 'medium' },
+                    { month: 'Mar', temp: 30, rain: 15, tourists: 70, budget: 'low' },
+                    { month: 'Apr', temp: 32, rain: 30, tourists: 60, budget: 'low' },
+                    { month: 'May', temp: 31, rain: 50, tourists: 50, budget: 'very_low' },
+                    { month: 'Jun', temp: 29, rain: 65, tourists: 45, budget: 'very_low' },
+                    { month: 'Jul', temp: 29, rain: 68, tourists: 50, budget: 'very_low' },
+                    { month: 'Aug', temp: 29, rain: 70, tourists: 55, budget: 'very_low' },
+                    { month: 'Sep', temp: 28, rain: 80, tourists: 40, budget: 'very_low' },
+                    { month: 'Oct', temp: 28, rain: 72, tourists: 45, budget: 'very_low' },
+                    { month: 'Nov', temp: 28, rain: 30, tourists: 65, budget: 'medium' },
+                    { month: 'Dec', temp: 26, rain: 12, tourists: 80, budget: 'high' }
+                ]
+            }
+        };
+
+        // Best time to visit recommendations
+        const bestTimeData = {
+            budget: {
+                phuket: {
+                    title: 'Phuket - Lowest Budget Times',
+                    subtitle: 'May to October (Monsoon Season)',
+                    description: 'During monsoon season, you can find significantly lower prices on flights, hotels, and activities. Rain usually comes in short bursts, leaving plenty of time for sightseeing.',
+                    months: [
+                        { name: 'May', pros: ['Hotels up to 60% cheaper', 'Fewer crowds', 'Lush green scenery'], cons: ['Daily rain showers', 'Some tours unavailable', 'Sea can be rough'], score: 8 },
+                        { name: 'June', pros: ['Very low season prices', 'Great spa deals', 'Indoor activities discount'], cons: ['Frequent rain', 'Limited boat trips', 'High humidity'], score: 7 },
+                        { name: 'September', pros: ['Lowest flight prices', 'Best spa deals', 'Authentic local experience'], cons: ['Peak monsoon', 'Some beaches closed', 'Weather unpredictable'], score: 7 }
+                    ]
+                },
+                krabi: {
+                    title: 'Krabi - Lowest Budget Times',
+                    subtitle: 'June to September',
+                    description: 'Krabi offers incredible value during the rainy season with dramatic limestone cliff views enhanced by monsoon clouds and waterfalls at their peak.',
+                    months: [
+                        { name: 'June', pros: ['Hotels 50-70% cheaper', 'Stunning waterfalls', 'Rock climbing discounts'], cons: ['Daily rain', 'Island hopping limited', 'High humidity'], score: 8 },
+                        { name: 'July', pros: ['Less crowded', 'Lower ferry prices', 'Local festivals'], cons: ['Rainy afternoons', 'Some trails closed', 'Mosquitoes'], score: 7 },
+                        { name: 'September', pros: ['Minimum prices', 'Emerald Pool visits', 'Photography paradise'], cons: ['Most rain', 'Limited boat tours', 'Can flood'], score: 6 }
+                    ]
+                },
+                bangkok: {
+                    title: 'Bangkok - Lowest Budget Times',
+                    subtitle: 'May to October',
+                    description: 'Bangkok is a year-round destination, but prices drop significantly during the rainy season. Indoor attractions like malls, temples, and markets are always available.',
+                    months: [
+                        { name: 'May', pros: ['Hotels 40-60% cheaper', 'Great mall sales', 'Songkran festival deals'], cons: ['Very hot', 'Pre-monsoon rains', 'Humidity high'], score: 7 },
+                        { name: 'June', pros: ['Low season prices', 'Indoor attractions ideal', 'Riverside discounts'], cons: ['Frequent rain', 'Flooding possible', 'Steam bath weather'], score: 7 },
+                        { name: 'September', pros: ['Minimum prices', 'Beautiful green city', 'Fewer tourists'], cons: ['Peak rain', 'Some outdoor tours', 'Sticky humidity'], score: 6 }
+                    ]
+                }
+            },
+            weather: {
+                phuket: {
+                    title: 'Phuket - Best Weather Times',
+                    subtitle: 'November to March',
+                    description: 'Enjoy perfect beach weather with calm seas, clear skies, and plenty of sunshine. This is peak season with the best conditions for all activities.',
+                    months: [
+                        { name: 'December', pros: ['Perfect weather', 'Crystal clear water', 'Christmas/New Year vibes'], cons: ['Highest prices', 'Most crowded', 'Book early'], score: 10 },
+                        { name: 'January', pros: ['Ideal temperature', 'Calm seas', 'Best visibility for diving'], cons: ['Peak season prices', 'Busy beaches', 'Need reservations'], score: 9 },
+                        { name: 'February', pros: ['Dry & sunny', 'Good for all activities', 'Comfortable humidity'], cons: ['Still crowded', 'Premium pricing', 'Flights expensive'], score: 9 }
+                    ]
+                },
+                krabi: {
+                    title: 'Krabi - Best Weather Times',
+                    subtitle: 'November to April',
+                    description: 'Perfect conditions for rock climbing, beach hopping, and island tours with minimal rainfall and comfortable temperatures.',
+                    months: [
+                        { name: 'January', pros: ['Perfect climbing weather', 'Clear waters', 'All tours available'], cons: ['Peak prices', 'Railay crowded', 'Book ahead'], score: 10 },
+                        { name: 'February', pros: ['Ideal temperature', 'Best snorkeling', 'Sunrise hikes perfect'], cons: ['Premium pricing', 'Popular time', 'Flights costly'], score: 9 },
+                        { name: 'March', pros: ['Great weather', 'Good prices (early)', 'Waterfalls still flowing'], cons: ['Getting warmer', 'Prices rising', 'Beaches busy'], score: 8 }
+                    ]
+                },
+                bangkok: {
+                    title: 'Bangkok - Best Weather Times',
+                    subtitle: 'November to March',
+                    description: 'The most comfortable time to explore Bangkok with cooler temperatures and minimal rainfall. Perfect for temple tours and street food adventures.',
+                    months: [
+                        { name: 'December', pros: ['Cool & pleasant', 'Dry weather', 'Festival season'], cons: ['Peak tourism', 'High prices', 'Busy attractions'], score: 9 },
+                        { name: 'January', pros: ['Perfect temperature', 'Clear skies', 'Best for sightseeing'], cons: ['Crowded', 'Premium prices', 'Book early'], score: 9 },
+                        { name: 'February', pros: ['Comfortable weather', 'Loy Krathong festival', 'Good flight deals (early)'], cons: ['Still busy', 'Prices elevated', 'Getting warmer'], score: 8 }
+                    ]
+                }
+            }
+        };
+
+        let currentWeatherTab = 'phuket';
+        let currentBestTimeTab = 'budget';
+
+        function switchWeatherTab(tab) {
+            currentWeatherTab = tab;
+            document.querySelectorAll('[id^="weather-tab-"]').forEach(btn => {
+                if (btn.id === `weather-tab-${tab}`) {
+                    btn.className = 'tab-active px-8 py-4 rounded-xl font-bold transition-all text-base';
+                } else {
+                    btn.className = 'px-8 py-4 rounded-xl font-bold bg-slate-800 bg-opacity-50 hover:bg-slate-700 transition-all text-base';
+                }
+            });
+            renderWeatherContent(tab);
+        }
+
+        function switchBestTimeTab(tab) {
+            currentBestTimeTab = tab;
+            document.querySelectorAll('[id^="besttime-tab-"]').forEach(btn => {
+                if (btn.id === `besttime-tab-${tab}`) {
+                    btn.className = 'tab-active px-8 py-4 rounded-xl font-bold transition-all text-base';
+                } else {
+                    btn.className = 'px-8 py-4 rounded-xl font-bold bg-slate-800 bg-opacity-50 hover:bg-slate-700 transition-all text-base';
+                }
+            });
+            renderBestTimeContent(tab);
+        }
+
+        function renderWeatherContent(tab) {
+            const data = weatherData[tab];
+            const destNames = { phuket: 'Phuket', krabi: 'Krabi', bangkok: 'Bangkok' };
+            const destIcons = { phuket: '🏖️', krabi: '⛰️', bangkok: '🏙️' };
+            const destColors = { phuket: 'cyan', krabi: 'emerald', bangkok: 'amber' };
+
+            const html = `
+                <div class="space-y-8">
+                    <!-- Current Weather -->
+                    <div class="text-center mb-8">
+                        <div class="inline-flex items-center gap-4 bg-slate-800/50 px-8 py-4 rounded-2xl">
+                            <span class="text-6xl">${destIcons[tab]}</span>
+                            <div class="text-left">
+                                <p class="text-slate-400 text-sm">Current Weather in</p>
+                                <h3 class="text-3xl font-bold text-${destColors[tab]}-400">${destNames[tab]}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Current Conditions Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                        <div class="bg-slate-800/50 rounded-xl p-4 text-center">
+                            <i data-lucide="thermometer" class="w-8 h-8 mx-auto mb-2 text-red-400"></i>
+                            <p class="text-3xl font-bold text-white">${data.current.temp}°C</p>
+                            <p class="text-slate-400 text-sm">Temperature</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-4 text-center">
+                            <i data-lucide="${data.current.icon}" class="w-8 h-8 mx-auto mb-2 text-yellow-400"></i>
+                            <p class="text-lg font-bold text-white">${data.current.condition}</p>
+                            <p class="text-slate-400 text-sm">Condition</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-4 text-center">
+                            <i data-lucide="droplets" class="w-8 h-8 mx-auto mb-2 text-blue-400"></i>
+                            <p class="text-3xl font-bold text-white">${data.current.humidity}%</p>
+                            <p class="text-slate-400 text-sm">Humidity</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-4 text-center">
+                            <i data-lucide="wind" class="w-8 h-8 mx-auto mb-2 text-cyan-400"></i>
+                            <p class="text-3xl font-bold text-white">${data.current.wind} km/h</p>
+                            <p class="text-slate-400 text-sm">Wind Speed</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-4 text-center">
+                            <i data-lucide="cloud-rain" class="w-8 h-8 mx-auto mb-2 text-indigo-400"></i>
+                            <p class="text-3xl font-bold text-white">${data.current.rainChance}%</p>
+                            <p class="text-slate-400 text-sm">Rain Chance</p>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-4 text-center">
+                            <i data-lucide="sun" class="w-8 h-8 mx-auto mb-2 text-orange-400"></i>
+                            <p class="text-3xl font-bold text-white">${data.current.uvIndex}</p>
+                            <p class="text-slate-400 text-sm">UV Index</p>
+                        </div>
+                    </div>
+
+                    <!-- Seasonal Overview -->
+                    <div>
+                        <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <i data-lucide="calendar" class="w-5 h-5 text-cyan-400"></i>
+                            Seasonal Overview
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gradient-to-br from-green-900/30 to-emerald-900/30 rounded-xl p-5 border border-green-500/30">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="w-4 h-4 bg-green-500 rounded-full"></span>
+                                    <span class="font-bold text-green-400">Peak Season</span>
+                                </div>
+                                <p class="text-white font-semibold mb-1">${data.seasons.peak.name}</p>
+                                <p class="text-slate-400 text-sm mb-3">${data.seasons.peak.desc}</p>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">Rainfall:</span>
+                                        <span class="text-white font-semibold">${data.seasons.peak.rain}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">Temperature:</span>
+                                        <span class="text-white font-semibold">${data.seasons.peak.temp}</span>
+                                    </div>
+                                </div>
+                                ${data.seasons.peak.ideal ? '<span class="inline-block mt-3 bg-green-500/20 text-green-300 text-xs px-3 py-1 rounded-full">★ Ideal Time</span>' : ''}
+                            </div>
+                            <div class="bg-gradient-to-br from-amber-900/30 to-orange-900/30 rounded-xl p-5 border border-amber-500/30">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="w-4 h-4 bg-amber-500 rounded-full"></span>
+                                    <span class="font-bold text-amber-400">Shoulder/Monsoon</span>
+                                </div>
+                                <p class="text-white font-semibold mb-1">${data.seasons.monsoon.name}</p>
+                                <p class="text-slate-400 text-sm mb-3">${data.seasons.monsoon.desc}</p>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">Rainfall:</span>
+                                        <span class="text-white font-semibold">${data.seasons.monsoon.rain}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">Temperature:</span>
+                                        <span class="text-white font-semibold">${data.seasons.monsoon.temp}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-xl p-5 border border-slate-600/30">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="w-4 h-4 bg-slate-500 rounded-full"></span>
+                                    <span class="font-bold text-slate-400">Transition</span>
+                                </div>
+                                <p class="text-white font-semibold mb-1">${data.seasons.shoulder?.name || data.seasons.monsoon.name}</p>
+                                <p class="text-slate-400 text-sm mb-3">Changeover Period</p>
+                                <div class="space-y-2 text-sm">
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">Rainfall:</span>
+                                        <span class="text-white font-semibold">${data.seasons.shoulder?.rain || 'Variable'}</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-slate-400">Temperature:</span>
+                                        <span class="text-white font-semibold">${data.seasons.shoulder?.temp || 'Variable'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monthly Breakdown -->
+                    <div>
+                        <h4 class="text-xl font-bold mb-4 flex items-center gap-2">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-cyan-400"></i>
+                            Monthly Weather & Tourism
+                        </h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-slate-700">
+                                        <th class="text-left py-3 px-4 text-slate-400 font-semibold">Month</th>
+                                        <th class="text-center py-3 px-4 text-slate-400 font-semibold">Temp</th>
+                                        <th class="text-center py-3 px-4 text-slate-400 font-semibold">Rain (mm)</th>
+                                        <th class="text-center py-3 px-4 text-slate-400 font-semibold">Tourists</th>
+                                        <th class="text-center py-3 px-4 text-slate-400 font-semibold">Budget</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${data.monthlyData.map(m => `
+                                        <tr class="border-b border-slate-800 hover:bg-slate-800/30 transition-colors">
+                                            <td class="py-3 px-4 font-semibold text-white">${m.month}</td>
+                                            <td class="text-center py-3 px-4 text-white">${m.temp}°C</td>
+                                            <td class="text-center py-3 px-4">
+                                                <div class="flex items-center justify-center gap-2">
+                                                    <div class="w-20 bg-slate-700 rounded-full h-2">
+                                                        <div class="bg-blue-500 h-2 rounded-full" style="width: ${m.rain}%"></div>
+                                                    </div>
+                                                    <span class="text-slate-400 text-sm">${m.rain}mm</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-center py-3 px-4">
+                                                <div class="flex items-center justify-center gap-2">
+                                                    <div class="w-20 bg-slate-700 rounded-full h-2">
+                                                        <div class="bg-cyan-500 h-2 rounded-full" style="width: ${m.tourists}%"></div>
+                                                    </div>
+                                                    <span class="text-slate-400 text-sm">${m.tourists}%</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-center py-3 px-4">
+                                                <span class="px-3 py-1 rounded-full text-xs font-bold ${m.budget === 'very_low' ? 'bg-green-500/20 text-green-400' : m.budget === 'low' ? 'bg-lime-500/20 text-lime-400' : m.budget === 'medium' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-red-500/20 text-red-400'}">
+                                                    ${m.budget === 'very_low' ? '💰💰💰' : m.budget === 'low' ? '💰💰' : m.budget === 'medium' ? '💰' : '💎'}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('weather-content').innerHTML = html;
+            lucide.createIcons();
+            AOS.refresh();
+        }
+
+        function renderBestTimeContent(tab) {
+            const destinations = ['phuket', 'krabi', 'bangkok'];
+            const destNames = { phuket: 'Phuket', krabi: 'Krabi', bangkok: 'Bangkok' };
+            const destIcons = { phuket: '🏖️', krabi: '⛰️', bangkok: '🏙️' };
+            const destColors = { phuket: 'cyan', krabi: 'emerald', bangkok: 'amber' };
+
+            let html = `<div class="space-y-8">`;
+
+            destinations.forEach((dest, idx) => {
+                const data = bestTimeData[tab][dest];
+                html += `
+                    <div class="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl p-6 border border-slate-700">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="text-4xl">${destIcons[dest]}</span>
+                            <div>
+                                <h4 class="text-2xl font-bold text-${destColors[dest]}-400">${data.title}</h4>
+                                <p class="text-slate-400">${data.subtitle}</p>
+                            </div>
+                        </div>
+                        <p class="text-slate-300 mb-6">${data.description}</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            ${data.months.map(m => `
+                                <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700 hover:border-${destColors[dest]}-500/50 transition-colors">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-xl font-bold text-white">${m.name}</span>
+                                        <div class="flex items-center gap-1">
+                                            ${Array(10).fill(0).map((_, i) => `<span class="text-xs ${i < m.score ? `text-${destColors[dest]}-400` : 'text-slate-600'}">★</span>`).join('')}
+                                        </div>
+                                    </div>
+                                    <div class="space-y-2 mb-4">
+                                        ${m.pros.map(p => `<p class="text-sm text-green-400">✓ ${p}</p>`).join('')}
+                                        ${m.cons.map(c => `<p class="text-sm text-red-400/70">✗ ${c}</p>`).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+
+            document.getElementById('besttime-content').innerHTML = html;
+            lucide.createIcons();
+            AOS.refresh();
+        }
+
+        // Initialize weather content on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            renderWeatherContent('phuket');
+            renderBestTimeContent('budget');
         });
     </script>
 
