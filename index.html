@@ -523,70 +523,70 @@
         /* Map container transition */
         .map-container {
             transition: opacity 0.5s ease;
-            overflow: visible;
+            overflow: visible !important;
         }
 
         .map-container.hidden {
             display: none;
         }
 
-        /* Map point container - allows popup to escape */
+        /* Map point container */
         .map-point-wrapper {
             position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow: visible;
+            overflow: visible !important;
+            z-index: 100;
+        }
+
+        /* Map Popup styles - MUST be on top of everything */
+        .map-point-wrapper,
+        .map-point {
+            position: relative;
             z-index: 10;
         }
 
-        /* Popup styles - positioned above everything */
         .map-popup {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            margin-bottom: 1rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 99999;
+            position: fixed !important;
+            bottom: auto !important;
+            left: auto !important;
+            top: auto !important;
+            transform: none !important;
+            margin: 0 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transition: opacity 0.2s ease, visibility 0.2s ease !important;
+            z-index: 999999 !important;
             width: 288px;
+            pointer-events: none;
         }
 
-        .group:hover .map-popup {
-            opacity: 1;
-            visibility: visible;
-            z-index: 99999;
+        /* Show popup on hover - positioned relative to viewport */
+        .map-point-wrapper:hover .map-popup,
+        .map-point:hover .map-popup {
+            opacity: 1 !important;
+            visibility: visible !important;
+            z-index: 999999 !important;
+            pointer-events: auto;
         }
 
-        /* Animation for popup */
-        @keyframes popupFadeIn {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-
-        .group:hover .map-popup {
-            animation: popupFadeIn 0.3s ease forwards;
-        }
-
-        /* Ensure popups have highest z-index and aren't clipped */
+        /* CRITICAL: Ensure popups have highest z-index and aren't clipped */
         .glass-card, .premium-card {
-            overflow: visible;
+            overflow: visible !important;
         }
 
         #phuket-map, #krabi-map {
-            overflow: visible;
+            overflow: visible !important;
         }
 
         .map-popup {
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Ensure all parent containers don't clip */
+        .relative {
+            overflow: visible !important;
         }
     </style>
 </head>
@@ -694,7 +694,8 @@
                             <select id="destination" class="w-full bg-slate-800 bg-opacity-50 border border-slate-700 rounded-xl pl-12 pr-4 py-4 focus:outline-none focus:ring-2 focus:ring-cyan-400 appearance-none cursor-pointer font-medium">
                                 <option value="HKT">Phuket (HKT)</option>
                                 <option value="KBV">Krabi (KBV)</option>
-                                <option value="BOTH">Both Destinations</option>
+                                <option value="BKK">Bangkok (BKK)</option>
+                                <option value="ALL3">All 3 Destinations</option>
                             </select>
                         </div>
                     </div>
@@ -1247,7 +1248,8 @@
             Object.keys(indianAirports).forEach(origin => {
                 flightDatabase[origin] = {
                     HKT: generateFlightData(origin, 'HKT', 365),
-                    KBV: generateFlightData(origin, 'KBV', 365)
+                    KBV: generateFlightData(origin, 'KBV', 365),
+                    BKK: generateFlightData(origin, 'BKK', 365)
                 };
             });
         }
@@ -1286,7 +1288,7 @@
                 const isPeakSeason = month >= 10 || month <= 1;
                 const seasonMultiplier = isPeakSeason ? 1.4 : 1.0;
 
-                const basePrice = (destination === 'HKT' ? 12000 : 10000) * (originPriceMap[origin] || 1.0);
+                const basePrice = (destination === 'HKT' ? 12000 : destination === 'KBV' ? 10000 : 9000) * (originPriceMap[origin] || 1.0);
                 const weekendSurcharge = isWeekend ? 3000 : 0;
                 const randomVariation = Math.floor(Math.random() * 4000) - 2000;
 
@@ -1410,7 +1412,15 @@
 
                     let lowestPrice = Infinity;
 
-                    if (destination === 'BOTH') {
+                    if (destination === 'ALL3') {
+                        const phuketFlights = flightDatabase[origin]?.HKT[dateStr] || [];
+                        const krabiFlights = flightDatabase[origin]?.KBV[dateStr] || [];
+                        const bangkokFlights = flightDatabase[origin]?.BKK[dateStr] || [];
+                        const allFlights = [...phuketFlights, ...krabiFlights, ...bangkokFlights];
+                        if (allFlights.length > 0) {
+                            lowestPrice = Math.min(...allFlights.map(f => f.price));
+                        }
+                    } else if (destination === 'BOTH') {
                         const phuketFlights = flightDatabase[origin]?.HKT[dateStr] || [];
                         const krabiFlights = flightDatabase[origin]?.KBV[dateStr] || [];
                         const allFlights = [...phuketFlights, ...krabiFlights];
@@ -1464,14 +1474,21 @@
             setTimeout(() => {
                 let flights = [];
 
-                if (destination === 'BOTH') {
-                    const phuketFlights = (flightDatabase[origin]?.HKT[dateStr] || []).map(f => ({ ...f, destination: 'Phuket (HKT)' }));
-                    const krabiFlights = (flightDatabase[origin]?.KBV[dateStr] || []).map(f => ({ ...f, destination: 'Krabi (KBV)' }));
+                if (destination === 'ALL3') {
+                    const phuketFlights = (flightDatabase[origin]?.HKT[dateStr] || []).map(f => ({ ...f, destination: 'Phuket (HKT)', destCode: 'HKT' }));
+                    const krabiFlights = (flightDatabase[origin]?.KBV[dateStr] || []).map(f => ({ ...f, destination: 'Krabi (KBV)', destCode: 'KBV' }));
+                    const bangkokFlights = (flightDatabase[origin]?.BKK[dateStr] || []).map(f => ({ ...f, destination: 'Bangkok (BKK)', destCode: 'BKK' }));
+                    flights = [...phuketFlights, ...krabiFlights, ...bangkokFlights];
+                } else if (destination === 'BOTH') {
+                    const phuketFlights = (flightDatabase[origin]?.HKT[dateStr] || []).map(f => ({ ...f, destination: 'Phuket (HKT)', destCode: 'HKT' }));
+                    const krabiFlights = (flightDatabase[origin]?.KBV[dateStr] || []).map(f => ({ ...f, destination: 'Krabi (KBV)', destCode: 'KBV' }));
                     flights = [...phuketFlights, ...krabiFlights];
                 } else {
+                    const destName = destination === 'HKT' ? 'Phuket (HKT)' : destination === 'KBV' ? 'Krabi (KBV)' : 'Bangkok (BKK)';
                     flights = (flightDatabase[origin]?.[destination]?.[dateStr] || []).map(f => ({
                         ...f,
-                        destination: destination === 'HKT' ? 'Phuket (HKT)' : 'Krabi (KBV)'
+                        destination: destName,
+                        destCode: destination
                     }));
                 }
 
@@ -1490,20 +1507,25 @@
                 }
 
                 const flightCards = flights.map((flight, index) => {
-                    const destCode = destination === 'HKT' ? 'HKT' : destination === 'KBV' ? 'KBV' : flight.destination.includes('HKT') ? 'HKT' : 'KBV';
+                    const destCode = flight.destCode || (destination === 'HKT' ? 'HKT' : destination === 'KBV' ? 'KBV' : 'BKK');
+                    const destName = flight.destination;
                     const layoverDisplay = flight.stops === 0
                         ? '<span class="text-green-400 font-bold bg-green-400/20 px-3 py-1 rounded-lg text-sm">✈️ Direct Flight</span>'
                         : `<span class="text-amber-400 font-bold bg-amber-400/20 px-3 py-1 rounded-lg text-sm">🛑 1 Stop via ${flight.layover}</span>`;
+                    const layoverDuration = flight.stops > 0 ? '<p class="text-xs text-amber-400">Layover: ~2h 30m</p>' : '';
+                    const destColor = destCode === 'HKT' ? 'text-cyan-400' : destCode === 'KBV' ? 'text-emerald-400' : 'text-purple-400';
 
                     return `
-                    <div class="glass-card premium-card rounded-2xl p-6 lg:p-8" data-aos="fade-up" data-aos-delay="${index * 80}">
+                    <div class="glass-card premium-card rounded-2xl p-6 lg:p-8 ${destination === 'ALL3' ? (destCode === 'HKT' ? 'border-cyan-500/30' : destCode === 'KBV' ? 'border-emerald-500/30' : 'border-purple-500/30') : ''}" data-aos="fade-up" data-aos-delay="${index * 80}">
                         <div class="flex flex-col lg:flex-row justify-between items-start gap-6">
                             <div class="flex items-center gap-5 w-full lg:w-auto">
                                 <span class="text-5xl">${flight.logo}</span>
                                 <div>
                                     <h3 class="font-bold text-xl mb-1">${flight.airline}</h3>
-                                    <p class="text-sm text-slate-400">${flight.destination}</p>
+                                    <p class="text-sm ${destination === 'ALL3' ? destColor : 'text-slate-400'}">${flight.destination}</p>
+                                    ${destination === 'ALL3' ? `<p class="text-xs ${destColor} font-medium">→ ${destName}</p>` : ''}
                                     <div class="mt-2">${layoverDisplay}</div>
+                                    ${layoverDuration}
                                 </div>
                             </div>
 
@@ -1850,6 +1872,54 @@
             initFlightDatePicker();
             renderAttractions('phuket');
             updateNightInputs();
+        });
+    </script>
+
+    <!-- Map Popup Container (for JavaScript-based popups) -->
+    <div id="map-popup-container" class="fixed z-[999999] pointer-events-none transition-opacity duration-200" style="opacity: 0;"></div>
+
+    <script>
+        // JavaScript-based map popup system for guaranteed visibility
+        const mapPopupContainer = document.getElementById('map-popup-container');
+
+        document.querySelectorAll('.map-point-wrapper, .map-point').forEach(point => {
+            const popup = point.querySelector('.map-popup');
+            if (!popup) return;
+
+            point.addEventListener('mouseenter', (e) => {
+                // Clone the popup content
+                const popupContent = popup.cloneNode(true);
+                popupContent.classList.remove('hidden', 'group-hover:block');
+                popupContent.style.opacity = '1';
+                popupContent.style.visibility = 'visible';
+                popupContent.style.pointerEvents = 'auto';
+                popupContent.style.position = 'fixed';
+
+                // Clear and populate container
+                mapPopupContainer.innerHTML = '';
+                mapPopupContainer.appendChild(popupContent);
+                mapPopupContainer.style.opacity = '1';
+                mapPopupContainer.style.pointerEvents = 'auto';
+
+                // Position popup above the point
+                const rect = point.getBoundingClientRect();
+                const popupRect = popupContent.getBoundingClientRect();
+
+                let left = rect.left + (rect.width / 2) - (288 / 2); // Center horizontally
+                let top = rect.top - popupRect.height - 10; // Above the point
+
+                // Keep within viewport
+                if (left < 10) left = 10;
+                if (left + 288 > window.innerWidth - 10) left = window.innerWidth - 298;
+
+                mapPopupContainer.style.left = left + 'px';
+                mapPopupContainer.style.top = top + 'px';
+            });
+
+            point.addEventListener('mouseleave', () => {
+                mapPopupContainer.style.opacity = '0';
+                mapPopupContainer.style.pointerEvents = 'none';
+            });
         });
     </script>
 
