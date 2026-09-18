@@ -1,5 +1,5 @@
 # Thailand trip planner — daily weather cache
-# generated: 2026-09-18T06:06:38.983Z  (day key 2026-09-18, Asia/Kolkata)
+# generated: 2026-09-18T06:09:31.872Z  (day key 2026-09-18, Asia/Kolkata)
 # cities: Phuket (phuket), Krabi (krabi), Bangkok (bangkok)
 # sources: Open-Meteo → wttr.in → previous repo record → seasonal estimate (live records: 3/3)
 # fx: 1 INR = 0.34707 THB via open.er-api.com
@@ -14,7 +14,7 @@
    "phuket": {
     "data": {
      "provider": "Open-Meteo",
-     "fetchedAt": "2026-09-18T06:06:38.871Z",
+     "fetchedAt": "2026-09-18T06:09:31.626Z",
      "current": {
       "temp": 28,
       "feels": 31,
@@ -249,13 +249,13 @@
      ]
     },
     "src": "live · Open-Meteo (repo file)",
-    "at": "2026-09-18T06:06:38.871Z",
+    "at": "2026-09-18T06:09:31.626Z",
     "thb": 0.34707
    },
    "krabi": {
     "data": {
      "provider": "Open-Meteo",
-     "fetchedAt": "2026-09-18T06:06:38.962Z",
+     "fetchedAt": "2026-09-18T06:09:31.752Z",
      "current": {
       "temp": 26,
       "feels": 30,
@@ -490,13 +490,13 @@
      ]
     },
     "src": "live · Open-Meteo (repo file)",
-    "at": "2026-09-18T06:06:38.962Z",
+    "at": "2026-09-18T06:09:31.752Z",
     "thb": 0.34707
    },
    "bangkok": {
     "data": {
      "provider": "Open-Meteo",
-     "fetchedAt": "2026-09-18T06:06:38.983Z",
+     "fetchedAt": "2026-09-18T06:09:31.872Z",
      "current": {
       "temp": 28,
       "feels": 34,
@@ -731,7 +731,7 @@
      ]
     },
     "src": "live · Open-Meteo (repo file)",
-    "at": "2026-09-18T06:06:38.983Z",
+    "at": "2026-09-18T06:09:31.872Z",
     "thb": 0.34707
    }
   }
