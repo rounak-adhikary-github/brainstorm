@@ -229,9 +229,13 @@
   .mk{position:absolute;transform:translate(-50%,-50%);z-index:5}
   .mk button{display:flex;flex-direction:column;align-items:center;gap:.25rem;cursor:pointer;background:none;border:none}
   .mk .pin,.pin{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#04101c;font-size:1.05rem;font-weight:800;
-    background:linear-gradient(140deg,#67e8f9,#a855f7);box-shadow:0 10px 26px -8px rgba(103,232,249,.9);transition:.35s;position:relative}
+    background:
+      radial-gradient(circle at 32% 24%,rgba(255,255,255,.62),transparent 58%),
+      linear-gradient(160deg,transparent 44%,rgba(3,6,20,.4)),
+      var(--pin,#67e8f9);
+    box-shadow:0 10px 26px -8px var(--pin,#67e8f9),inset 0 0 0 2px rgba(255,255,255,.38);transition:.35s;position:relative}
   .mk:hover .pin,.mk.on .pin,.pin:hover{transform:translateY(-4px) scale(1.12)}
-  .pin::before{content:'';position:absolute;inset:0;border-radius:inherit;border:2px solid rgba(103,232,249,.6);animation:mapPulse 2.6s infinite}
+  .pin::before{content:'';position:absolute;inset:0;border-radius:inherit;border:2px solid var(--pin,#67e8f9);animation:mapPulse 2.6s infinite}
   @keyframes mapPulse{0%{transform:scale(1);opacity:.75}100%{transform:scale(1.75);opacity:0}}
   .mk .cap{font-size:.68rem;font-weight:700;color:#dfe7ff;padding:.16rem .5rem;border-radius:8px;background:rgba(5,6,15,.72);border:1px solid var(--line);white-space:nowrap}
   #mapPopup{position:absolute;z-index:30;width:min(300px,86vw);opacity:0;pointer-events:none;transform:translate(-50%,-100%) scale(.96);
@@ -247,11 +251,62 @@
   .leaflet-popup-content{margin:12px 14px;width:auto!important;line-height:1.45}
   .leaflet-popup-tip{background:rgba(6,8,20,.96);border:1px solid rgba(34,211,238,.32)}
   .leaflet-popup-close-button{color:#93a0c4!important;padding:6px 8px 0 0!important}
-  .leaflet-bar a,.leaflet-bar a:hover{background:rgba(6,8,20,.92);color:#eef2ff;border-color:rgba(255,255,255,.14)}
-  .leaflet-bar a:hover{border-color:rgba(34,211,238,.6)}
-  .leaflet-control-attribution{background:rgba(6,8,20,.72)!important;color:#8494bb!important;font-size:10px!important;border-radius:8px 0 0 0}
+  .leaflet-bar{border:none!important;box-shadow:0 14px 30px -18px #000}
+  .leaflet-bar a,.leaflet-bar a:hover{background:rgba(6,8,20,.82);color:#eef2ff;border-color:rgba(255,255,255,.14);backdrop-filter:blur(14px);
+    width:32px;height:32px;line-height:32px;font-size:18px;font-weight:700}
+  .leaflet-bar a:hover{border-color:rgba(34,211,238,.6);background:rgba(34,211,238,.22)}
+  .leaflet-control-attribution{background:rgba(6,8,20,.66)!important;color:#8494bb!important;font-size:10px!important;border-radius:8px 0 0 0;
+    backdrop-filter:blur(10px);padding:2px 6px!important}
   .leaflet-control-attribution a{color:#67e8f9!important}
-  .leaflet-tile-pane{filter:saturate(1.05)}
+  .leaflet-control-scale-line{background:rgba(6,8,20,.66)!important;color:#cfd7f0!important;border-color:rgba(255,255,255,.35)!important;
+    border-radius:4px;font-size:10px!important;padding:1px 5px!important;backdrop-filter:blur(10px)}
+
+  /* per-basemap tone. Leaflet panes have no intrinsic size, so an overlay div can't be
+     used here — the tint is baked into the tile pane with a colourising filter instead. */
+  #mapStage[data-layer="sat"] .leaflet-tile-pane{filter:saturate(1.16) contrast(1.06) brightness(1.02)}
+  #mapStage[data-layer="street"] .leaflet-tile-pane{filter:saturate(1.04) contrast(1.03)}
+  #mapStage[data-layer="dark"] .leaflet-tile-pane{filter:sepia(.9) saturate(3) hue-rotate(178deg) brightness(.86) contrast(1.14)}
+
+  /* teardrop markers, tinted per category */
+  .mpin{position:relative;display:block;width:36px;height:46px}
+  .mpin-head{position:absolute;left:1px;top:0;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+    color:#04101c;font-family:'Outfit',sans-serif;font-weight:900;font-size:.94rem;line-height:1;
+    background:
+      radial-gradient(circle at 33% 25%,rgba(255,255,255,.7),transparent 58%),
+      linear-gradient(160deg,transparent 42%,rgba(3,6,20,.4)),
+      var(--pin,#67e8f9);
+    box-shadow:0 0 0 2px rgba(255,255,255,.92) inset,0 9px 18px -7px rgba(0,0,0,.8);transition:transform .28s}
+  .mpin-tail{position:absolute;left:50%;top:29px;transform:translateX(-50%);width:0;height:0;
+    border-left:7px solid transparent;border-right:7px solid transparent;border-top:16px solid var(--pin,#67e8f9);
+    filter:drop-shadow(0 4px 3px rgba(0,0,0,.45))}
+  .mpin-halo{position:absolute;left:18px;top:17px;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;
+    border:2px solid var(--pin,#67e8f9);opacity:0;pointer-events:none}
+  .mpin:hover .mpin-head,.mpin.on .mpin-head{transform:translateY(-3px) scale(1.1)}
+  .mpin.on .mpin-halo{animation:mapPulse 2s infinite}
+  .leaflet-tooltip.mpin-tip{background:rgba(6,8,20,.94);color:#eef2ff;border:1px solid rgba(34,211,238,.4);border-radius:10px;
+    font-weight:700;font-size:.74rem;padding:.28rem .55rem;box-shadow:0 14px 30px -16px #000;white-space:nowrap;backdrop-filter:blur(12px)}
+  .leaflet-tooltip.mpin-tip::before{display:none}
+
+  /* base-layer switcher + map chrome */
+  .maptools{position:absolute;top:12px;left:12px;z-index:12;display:flex;gap:.35rem;flex-wrap:wrap;max-width:calc(100% - 200px)}
+  .mbtn{display:inline-flex;align-items:center;gap:.34rem;font-size:.71rem;font-weight:800;padding:.42rem .66rem;border-radius:11px;cursor:pointer;
+    background:rgba(6,8,20,.74);border:1px solid var(--line);color:#cfd7f0;backdrop-filter:blur(14px);transition:.3s;white-space:nowrap;line-height:1}
+  .mbtn:hover{border-color:rgba(34,211,238,.55);color:#fff;transform:translateY(-1px)}
+  .mbtn.on{background:linear-gradient(120deg,rgba(34,211,238,.92),rgba(168,85,247,.92));border-color:transparent;color:#04101c;
+    box-shadow:0 12px 28px -14px rgba(34,211,238,.9)}
+  .mbtn svg{width:13px;height:13px;flex:none}
+  .mbtn.micon{padding:.42rem .5rem}
+  /* the jump-out button sits on top of the basemap, so it needs its own solid backing
+     to stay readable over the pale street tiles as well as the satellite imagery */
+  #mapOpen{background:rgba(6,8,20,.84);color:#eef2ff;border-color:rgba(255,255,255,.18);backdrop-filter:blur(14px);
+    box-shadow:0 12px 26px -16px #000}
+  #mapOpen:hover{background:rgba(34,211,238,.24);color:#fff;border-color:rgba(34,211,238,.6)}
+  .mapzoom{display:inline-flex;background:rgba(6,8,20,.74);border:1px solid var(--line);border-radius:11px;overflow:hidden;backdrop-filter:blur(14px)}
+  .mapzoom button{display:grid;place-items:center;width:29px;height:29px;background:none;border:none;color:#cfd7f0;cursor:pointer;transition:.25s;padding:0}
+  .mapzoom button+button{border-left:1px solid var(--line)}
+  .mapzoom button:hover{background:rgba(34,211,238,.24);color:#fff}
+  .mapzoom button:active{background:rgba(168,85,247,.34)}
+  .mapzoom svg{width:13px;height:13px}
 
   /* ---------- planner drawer + toasts + fab ---------- */
   #drawer{position:fixed;top:0;right:0;bottom:0;width:min(430px,94vw);z-index:200;transform:translateX(105%);transition:transform .55s cubic-bezier(.22,1,.36,1);
@@ -315,6 +370,12 @@
     #toTop{bottom:82px;left:14px;width:46px;height:46px}
     #toasts{right:10px;left:10px;max-width:none;top:72px}
     .mapstage{aspect-ratio:4/5;min-height:420px}
+    /* on phones the control row collapses to icons so everything stays on one line */
+    .mlabel,.hide-sm{display:none}
+    .maptools{max-width:calc(100% - 64px);top:10px;left:10px;gap:.3rem}
+    .mbtn{padding:.44rem .5rem}
+    .mapzoom button{width:28px;height:28px}
+    #mapModeBadge{font-size:.6rem!important;max-width:64%}
   }
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
@@ -734,7 +795,7 @@
     <div class="text-center" data-reveal>
       <span class="eyebrow"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i>Step 04 · Maps</span>
       <h2 class="sect-title mt-4">Pin the trip on the <span class="aurora-text">map</span></h2>
-      <p class="lead mt-3 max-w-3xl mx-auto">Every pin is placed from real coordinates, so you can see how your days will flow. Tap a pin for details, or jump straight to Google Maps for directions.</p>
+      <p class="lead mt-3 max-w-3xl mx-auto">Every pin is placed from real coordinates, so you can see how your days will flow. Flip between satellite, street and midnight views, tap a pin for details, or jump straight to Google Maps for directions.</p>
     </div>
 
     <div class="flex flex-wrap items-center justify-center gap-2" data-reveal="up">
@@ -749,14 +810,24 @@
         <h3 class="font-display font-extrabold text-xl flex items-center gap-2"><i data-lucide="compass" class="w-5 h-5 text-cyan-300"></i><span id="mapTitle">Phuket</span> hotspots</h3>
         <div class="flex items-center gap-2 flex-wrap" id="mapCats"></div>
       </div>
-      <div class="mapstage" id="mapStage">
+      <div class="mapstage" id="mapStage" data-layer="sat">
         <div id="mapCanvas"></div>
         <div class="grid-lines" id="mapSchematic"></div>
         <div id="mapPins"></div>
         <div id="mapPopup" class="glass p-3"></div>
+        <div class="maptools" id="mapTools">
+          <button class="mbtn on" data-mlayer="sat" title="Satellite imagery"><i data-lucide="satellite"></i><span class="mlabel">Satellite</span></button>
+          <button class="mbtn" data-mlayer="street" title="Street map"><i data-lucide="map"></i><span class="mlabel">Streets</span></button>
+          <button class="mbtn" data-mlayer="dark" title="Midnight map"><i data-lucide="moon-star"></i><span class="mlabel">Midnight</span></button>
+          <button class="mbtn micon" id="mapFit" title="Fit every pin in view"><i data-lucide="maximize"></i></button>
+          <span class="mapzoom">
+            <button id="mapZoomOut" title="Zoom out" aria-label="Zoom out"><i data-lucide="minus"></i></button>
+            <button id="mapZoomIn" title="Zoom in" aria-label="Zoom in"><i data-lucide="plus"></i></button>
+          </span>
+        </div>
         <div class="absolute bottom-3 left-3 z-10 text-[.68rem] muted glass-soft px-3 py-1.5" id="mapModeBadge">stylised schematic · lat/long scaled to the frame</div>
-        <a id="mapOpen" target="_blank" rel="noopener" class="btn btn-ghost btn-sm absolute top-3 right-3 z-10" href="#">
-          <i data-lucide="external-link" class="w-3.5 h-3.5"></i>Open in Google Maps
+        <a id="mapOpen" target="_blank" rel="noopener" class="btn btn-ghost btn-sm absolute top-3 right-3 z-10" href="#" title="Open in Google Maps">
+          <i data-lucide="external-link" class="w-3.5 h-3.5"></i><span class="hide-sm">Open in Google Maps</span>
         </a>
       </div>
       <div id="mapList" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-3 mt-4"></div>
@@ -1976,12 +2047,65 @@ function projectSpots(spots) {
   };
 }
 
+/* one colour per spot category, so the pins, the chips and the cards all agree */
+const CAT_COLOR = {
+  Beach: '#22d3ee', Island: '#34d399', Culture: '#fbbf24', Viewpoint: '#a78bfa', Nature: '#4ade80',
+  Adventure: '#fb7185', Nightlife: '#f472b6', Food: '#fb923c', Shopping: '#60a5fa', Diving: '#2dd4bf', Snorkel: '#38bdf8'
+};
+const catColor = c => CAT_COLOR[c] || '#67e8f9';
+
 function renderMapCategories() {
   const cats = ['all'].concat(Array.from(new Set(MAP_SPOTS[M.tab].map(s => s.c))));
-  $('#mapCats').innerHTML = cats.map(c => `<button class="chip mcat${(c === M.cat || (M.cat === 'all' && c === 'all')) ? ' on' : ''}" data-mcat="${c}">${c === 'all' ? 'All ' + MAP_SPOTS[M.tab].length : c}</button>`).join('');
+  $('#mapCats').innerHTML = cats.map(c => {
+    const on = (c === M.cat) || (M.cat === 'all' && c === 'all');
+    const dot = c === 'all'
+      ? 'conic-gradient(#22d3ee,#34d399,#fbbf24,#a78bfa,#fb7185,#f472b6)'
+      : catColor(c);
+    return `<button class="chip mcat${on ? ' on' : ''}" data-mcat="${c}">` +
+      `<span style="width:.6rem;height:.6rem;border-radius:50%;flex:none;background:${dot};box-shadow:0 0 8px ${c === 'all' ? '#67e8f9' : catColor(c)}"></span>` +
+      `${c === 'all' ? 'All ' + MAP_SPOTS[M.tab].length : c}</button>`;
+  }).join('');
 }
 
-const mapEngine = { leaflet: null, markers: null, tries: 0, mode: null };
+/* key-free, watermark-free basemaps. Esri serves these without a token; the
+   OpenStreetMap tiles are the last-resort stand-in if Esri is unreachable. */
+const OSM_TILES = {
+  url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxNativeZoom: 19
+};
+const BASE_LAYERS = {
+  sat: {
+    label: 'satellite view',
+    badge: 'satellite view · © Esri, Maxar, Earthstar Geographics',
+    tiles: [
+      { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+        attribution: 'Imagery &copy; <a href="https://www.esri.com/">Esri</a>, Maxar, Earthstar Geographics', maxNativeZoom: 19 },
+      OSM_TILES
+    ],
+    labels: [{ url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', maxNativeZoom: 19 }]
+  },
+  street: {
+    label: 'street map',
+    badge: 'street map · © Esri, HERE, Garmin, OpenStreetMap',
+    tiles: [
+      { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+        attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> — Esri, HERE, Garmin, OpenStreetMap contributors', maxNativeZoom: 19 },
+      OSM_TILES
+    ]
+  },
+  dark: {
+    label: 'midnight map',
+    badge: 'midnight map · © Esri, HERE, Garmin',
+    tiles: [
+      { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+        attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> — Esri, HERE, Garmin, OpenStreetMap contributors', maxNativeZoom: 16 },
+      OSM_TILES
+    ],
+    labels: [{ url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}', maxNativeZoom: 16 }]
+  }
+};
+
+const mapEngine = { leaflet: null, markers: null, mode: null, layer: 'sat', tries: 0, tilesFailed: false, lastBounds: null };
 
 function spotPopupHtml(s, n) {
   return `
@@ -1997,7 +2121,7 @@ function spotPopupHtml(s, n) {
     </div>`;
 }
 
-/* real map first (OpenStreetMap tiles via Leaflet); the stylised schematic is the offline fallback */
+/* real map first (key-free Esri / OpenStreetMap tiles via Leaflet); the stylised schematic is the offline fallback */
 function setMapMode(mode) {
   if (mapEngine.mode === mode) return;
   mapEngine.mode = mode;
@@ -2006,35 +2130,78 @@ function setMapMode(mode) {
   $('#mapSchematic').style.display = live ? 'none' : 'block';
   $('#mapPins').style.display = live ? 'none' : 'block';
   $('#mapPopup').style.display = live ? 'none' : 'block';
+  $('#mapTools').style.display = live ? 'flex' : 'none';
   $('#mapModeBadge').textContent = live
-    ? 'live map · © OpenStreetMap & CARTO · pinch or ＋/− to zoom'
+    ? BASE_LAYERS[mapEngine.layer].badge + ' · drag to pan, ＋/− to zoom'
     : 'offline schematic · pins placed from real coordinates';
+}
+
+function makeTileLayer(spec, extra) {
+  return L.tileLayer(spec.url, Object.assign({
+    attribution: spec.attribution || '', maxNativeZoom: spec.maxNativeZoom || 19, maxZoom: 19
+  }, extra || {}));
+}
+
+/* Swaps the basemap, walking down its provider list on tile errors so a blocked
+   CDN degrades to OpenStreetMap instead of leaving a blank or watermarked map. */
+function setBaseLayer(key) {
+  const map = mapEngine.leaflet;
+  if (!map || !BASE_LAYERS[key]) return;
+  mapEngine.layer = key;
+  $('#mapStage').setAttribute('data-layer', key);
+  $$('#mapTools [data-mlayer]').forEach(b => b.classList.toggle('on', b.dataset.mlayer === key));
+
+  ['base', 'labels'].forEach(slot => {
+    if (mapEngine[slot]) { map.removeLayer(mapEngine[slot]); mapEngine[slot] = null; }
+  });
+
+  const conf = BASE_LAYERS[key];
+  const chain = conf.tiles.slice();
+  let attempt = 0, tries = 0;
+  const add = () => {
+    const spec = chain[attempt];
+    const layer = makeTileLayer(spec).on('tileerror', () => {
+      if (++tries === 4 && attempt < chain.length - 1) {   // dead provider → try the next one
+        attempt++; tries = 0;
+        map.removeLayer(layer);
+        add();
+      } else if (tries > 12) {                             // nothing renders → schematic
+        mapEngine.tilesFailed = true;
+        setMapMode('schematic');
+      }
+    }).addTo(map);
+    mapEngine.base = layer;
+  };
+  add();
+
+  if (conf.labels) {
+    mapEngine.labels = makeTileLayer(conf.labels[0], { pane: 'labels', attribution: '' }).addTo(map);
+  }
+  if (mapEngine.mode === 'live') {
+    $('#mapModeBadge').textContent = conf.badge + ' · drag to pan, ＋/− to zoom';
+  }
 }
 
 function ensureLeaflet() {
   if (mapEngine.leaflet) return mapEngine.leaflet;
   if (!window.L || !$('#mapCanvas')) return null;
   const map = L.map('mapCanvas', {
-    zoomControl: true, scrollWheelZoom: false, attributionControl: true,
-    center: [9.5, 99.5], zoom: 6, worldCopyJump: true      // integer zoom keeps OSM tiles pixel-crisp
+    zoomControl: false, scrollWheelZoom: false, attributionControl: true,
+    center: [9.5, 99.5], zoom: 6, worldCopyJump: true
   });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd', maxZoom: 19
-  }).on('tileerror', () => {
-    mapEngine.tries++;
-    if (mapEngine.tries === 4 && !mapEngine.usedFallbackTiles) {   // swap to plain OSM tiles once
-      mapEngine.usedFallbackTiles = true;
-      map.eachLayer(l => { if (l instanceof L.TileLayer) map.removeLayer(l); });
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', maxZoom: 19
-      }).addTo(map);
-    } else if (mapEngine.tries > 10) {   // no tile access at all → schematic
-      mapEngine.tilesFailed = true;
-      setMapMode('schematic');
-    }
-  }).addTo(map);
+  /* labels ride above the tinted tiles but below the pins */
+  map.createPane('labels');
+  map.getPane('labels').style.zIndex = 350;
+  map.getPane('labels').style.pointerEvents = 'none';
+
+  L.control.scale({ imperial: false, position: 'bottomright', maxWidth: 110 }).addTo(map);
+
   mapEngine.leaflet = map;
+  setBaseLayer(mapEngine.layer);
+  /* let people scroll-zoom once they have deliberately engaged with the map,
+     without hijacking the page scroll on the way past */
+  map.on('click', () => map.scrollWheelZoom.enable());
+  map.on('mouseout', () => map.scrollWheelZoom.disable());
   setTimeout(() => map.invalidateSize(), 350);
   return map;
 }
@@ -2046,19 +2213,32 @@ function renderMapMarkers(shown) {
   mapEngine.markers = L.layerGroup().addTo(map);
   const pts = [];
   shown.forEach((s, i) => {
-    const icon = L.divIcon({ className: '', html: `<span class="pin" title="${esc(s.n)}">${i + 1}</span>`, iconSize: [42, 42], iconAnchor: [21, 21], popupAnchor: [0, -24] });
-    L.marker([s.lat, s.lon], { icon, title: s.n, riseOnHover: true })
+    const col = catColor(s.c);
+    const html = `<span class="mpin" style="--pin:${col}">` +
+      `<span class="mpin-halo"></span><span class="mpin-tail"></span>` +
+      `<span class="mpin-head">${i + 1}</span></span>`;
+    const icon = L.divIcon({ className: '', html, iconSize: [36, 46], iconAnchor: [18, 45], popupAnchor: [0, -46], tooltipAnchor: [0, -44] });
+    const marker = L.marker([s.lat, s.lon], { icon, title: s.n, riseOnHover: true, alt: s.n })
+      .bindTooltip(`${i + 1}. ${esc(s.n)}`, { direction: 'top', className: 'mpin-tip', opacity: 1 })
       .bindPopup(spotPopupHtml(s, i + 1), { maxWidth: 300, minWidth: 250, autoPanPadding: [24, 24] })
+      .on('popupopen', () => marker.getElement()?.querySelector('.mpin')?.classList.add('on'))
+      .on('popupclose', () => marker.getElement()?.querySelector('.mpin')?.classList.remove('on'))
       .addTo(mapEngine.markers);
     pts.push([s.lat, s.lon]);
   });
   if (pts.length) {
-    const bounds = L.latLngBounds(pts);
-    if (pts.length === 1) map.setView(pts[0], 12);
-    else map.fitBounds(bounds, { padding: [46, 46], maxZoom: 13 });
+    mapEngine.lastBounds = pts;
+    fitMapToPins();
   }
   setTimeout(() => map.invalidateSize(), 120);
   return true;
+}
+
+function fitMapToPins() {
+  const map = mapEngine.leaflet, pts = mapEngine.lastBounds;
+  if (!map || !pts || !pts.length) return;
+  if (pts.length === 1) map.setView(pts[0], 12);
+  else map.fitBounds(L.latLngBounds(pts), { padding: [52, 52], maxZoom: 13 });
 }
 
 function renderSchematic(shown) {
@@ -2066,7 +2246,7 @@ function renderSchematic(shown) {
   $('#mapPins').innerHTML = shown.map((s, i) => {
     const p = place(s);
     return `<div class="mk" style="left:${p.left}%;top:${p.top}%" data-mk="${i}" data-x="${p.left}" data-y="${p.top}">
-        <button aria-label="${esc(s.n)}"><span class="pin">${i + 1}</span><span class="cap">${esc(s.n)}</span></button>
+        <button aria-label="${esc(s.n)}"><span class="pin" style="--pin:${catColor(s.c)}">${i + 1}</span><span class="cap">${esc(s.n)}</span></button>
       </div>`;
   }).join('');
   const popup = $('#mapPopup');
@@ -2107,10 +2287,10 @@ function renderMap() {
   $('#mapOpen').href = mapsUrl(MAP_SPOTS[M.tab][0].lat, MAP_SPOTS[M.tab][0].lon);
   $('#mapList').innerHTML = shown.map((s, i) => `
     <button class="glass-soft p-3 flex items-center gap-3 text-left w-full" data-goto="${i}" data-reveal="up" style="--d:${Math.min(i * 50, 250)}ms">
-      <span class="w-9 h-9 rounded-xl grid place-items-center font-bold shrink-0" style="background:linear-gradient(140deg,#67e8f9,#a855f7);color:#04101c">${i + 1}</span>
+      <span class="w-9 h-9 rounded-xl grid place-items-center font-bold shrink-0" style="background:${catColor(s.c)};color:#04101c;box-shadow:0 8px 20px -10px ${catColor(s.c)}">${i + 1}</span>
       <span class="min-w-0 flex-1">
         <span class="block text-sm font-bold truncate">${esc(s.n)}</span>
-        <span class="block text-[.68rem] muted truncate">${s.c} · ${s.time} · tap to focus</span>
+        <span class="block text-[.68rem] muted truncate"><span style="color:${catColor(s.c)}">●</span> ${s.c} · ${s.time} · tap to focus</span>
       </span>
       <span class="btn btn-ghost btn-sm shrink-0"><i data-lucide="crosshair" class="w-3.5 h-3.5"></i></span>
     </button>`).join('');
@@ -2865,6 +3045,16 @@ function initTabs() {
     M.cat = b.dataset.mcat;
     renderMap();
   });
+  $$('#mapTools [data-mlayer]').forEach(b => b.onclick = () => {
+    setBaseLayer(b.dataset.mlayer);
+    toast(`${BASE_LAYERS[b.dataset.mlayer].label} on`, 'ok', 1800);
+  });
+  $('#mapFit').onclick = () => {
+    fitMapToPins();
+    if (mapEngine.mode !== 'live') { const mk = $('#mapPins .mk button'); if (mk) mk.click(); }
+  };
+  $('#mapZoomIn').onclick = () => mapEngine.leaflet && mapEngine.leaflet.zoomIn();
+  $('#mapZoomOut').onclick = () => mapEngine.leaflet && mapEngine.leaflet.zoomOut();
 }
 
 /* ---------------- flight + hotel controls ---------------- */
