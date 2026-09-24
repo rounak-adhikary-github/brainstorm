@@ -1,228 +1,218 @@
 # Thailand trip planner — daily weather cache
-# generated: 2026-09-23T06:01:04.609Z  (day key 2026-09-23, Asia/Kolkata)
+# generated: 2026-09-24T06:12:12.360Z  (day key 2026-09-24, Asia/Kolkata)
 # cities: Phuket (phuket), Krabi (krabi), Bangkok (bangkok)
 # sources: Open-Meteo → wttr.in → previous repo record → seasonal estimate (live records: 3/3)
-# fx: 1 INR = 0.346971 THB via open.er-api.com
+# fx: 1 INR = 0.348479 THB via open.er-api.com
 # refreshed automatically by .github/workflows/weather.yml — keep this file next to index.html
 
 # Only today is kept: the front-end deletes older days on its first load of a new day.
 {
  "v": 2,
- "day": "2026-09-23",
+ "day": "2026-09-24",
  "days": {
-  "2026-09-23": {
+  "2026-09-24": {
    "phuket": {
     "data": {
      "provider": "Open-Meteo",
-     "fetchedAt": "2026-09-23T06:01:04.368Z",
+     "fetchedAt": "2026-09-24T06:12:12.248Z",
      "current": {
-      "temp": 26,
-      "feels": 31,
-      "humidity": 93,
-      "wind": 7,
-      "windDir": 286,
-      "rain": 0.7,
-      "cloud": 100,
-      "uv": 6.4,
-      "code": 81,
-      "label": "Rain showers",
-      "icon": "🌧️"
+      "temp": 30,
+      "feels": 37,
+      "humidity": 74,
+      "wind": 8,
+      "windDir": 290,
+      "rain": 0.1,
+      "cloud": 84,
+      "uv": 3.9,
+      "code": 95,
+      "label": "Thunderstorm",
+      "icon": "⛈️"
      },
-     "rainChance": 98,
+     "rainChance": 78,
      "hourly": [
       {
        "t": "13:00",
-       "temp": 26,
-       "rain": 98,
-       "code": 81
+       "temp": 30,
+       "rain": 78,
+       "code": 51
       },
       {
        "t": "14:00",
-       "temp": 27,
-       "rain": 97,
-       "code": 53
+       "temp": 30,
+       "rain": 78,
+       "code": 51
       },
       {
        "t": "15:00",
-       "temp": 26,
-       "rain": 95,
-       "code": 80
+       "temp": 28,
+       "rain": 77,
+       "code": 95
       },
       {
        "t": "16:00",
        "temp": 26,
-       "rain": 92,
-       "code": 55
+       "rain": 71,
+       "code": 80
       },
       {
        "t": "17:00",
        "temp": 26,
-       "rain": 87,
-       "code": 51
+       "rain": 58,
+       "code": 53
       },
       {
        "t": "18:00",
        "temp": 26,
-       "rain": 79,
+       "rain": 41,
        "code": 3
       },
       {
        "t": "19:00",
        "temp": 26,
-       "rain": 71,
+       "rain": 27,
        "code": 3
       },
       {
        "t": "20:00",
        "temp": 26,
-       "rain": 60,
+       "rain": 19,
        "code": 3
       },
       {
        "t": "21:00",
        "temp": 26,
-       "rain": 48,
+       "rain": 14,
        "code": 3
       },
       {
        "t": "22:00",
        "temp": 26,
-       "rain": 39,
-       "code": 51
+       "rain": 10,
+       "code": 3
       },
       {
        "t": "23:00",
        "temp": 26,
-       "rain": 36,
-       "code": 53
+       "rain": 8,
+       "code": 3
       },
       {
        "t": "00:00",
-       "temp": 25,
-       "rain": 36,
-       "code": 55
+       "temp": 26,
+       "rain": 7,
+       "code": 3
       },
       {
        "t": "01:00",
-       "temp": 25,
-       "rain": 37,
-       "code": 53
+       "temp": 26,
+       "rain": 8,
+       "code": 3
       },
       {
        "t": "02:00",
-       "temp": 25,
-       "rain": 38,
-       "code": 51
+       "temp": 26,
+       "rain": 10,
+       "code": 3
       },
       {
        "t": "03:00",
-       "temp": 25,
-       "rain": 39,
-       "code": 51
+       "temp": 26,
+       "rain": 14,
+       "code": 3
       },
       {
        "t": "04:00",
-       "temp": 25,
-       "rain": 41,
-       "code": 51
+       "temp": 26,
+       "rain": 16,
+       "code": 3
       },
       {
        "t": "05:00",
-       "temp": 25,
-       "rain": 44,
-       "code": 51
+       "temp": 26,
+       "rain": 16,
+       "code": 3
       },
       {
        "t": "06:00",
-       "temp": 25,
-       "rain": 49,
-       "code": 51
+       "temp": 26,
+       "rain": 15,
+       "code": 3
       },
       {
        "t": "07:00",
-       "temp": 26,
-       "rain": 53,
+       "temp": 27,
+       "rain": 16,
        "code": 3
       },
       {
        "t": "08:00",
-       "temp": 26,
-       "rain": 56,
-       "code": 80
+       "temp": 28,
+       "rain": 18,
+       "code": 2
       },
       {
        "t": "09:00",
-       "temp": 26,
-       "rain": 60,
-       "code": 95
-      },
-      {
-       "t": "10:00",
-       "temp": 26,
-       "rain": 63,
+       "temp": 28,
+       "rain": 21,
        "code": 51
       },
       {
+       "t": "10:00",
+       "temp": 29,
+       "rain": 29,
+       "code": 1
+      },
+      {
        "t": "11:00",
-       "temp": 26,
-       "rain": 67,
-       "code": 53
+       "temp": 30,
+       "rain": 46,
+       "code": 1
       },
       {
        "t": "12:00",
-       "temp": 28,
-       "rain": 71,
-       "code": 53
+       "temp": 30,
+       "rain": 67,
+       "code": 3
       }
      ],
      "daily": [
       {
-       "date": "2026-09-23",
-       "max": 27,
-       "min": 25,
-       "code": 81,
-       "rain": 98,
-       "uv": 8.2,
-       "sunrise": "06:15",
-       "sunset": "18:22"
-      },
-      {
        "date": "2026-09-24",
-       "max": 28,
+       "max": 30,
        "min": 25,
        "code": 95,
-       "rain": 73,
-       "uv": 1.3,
+       "rain": 84,
+       "uv": 4.45,
        "sunrise": "06:15",
        "sunset": "18:21"
       },
       {
        "date": "2026-09-25",
-       "max": 29,
-       "min": 25,
-       "code": 80,
-       "rain": 82,
-       "uv": 3.2,
+       "max": 30,
+       "min": 26,
+       "code": 95,
+       "rain": 87,
+       "uv": 7.4,
        "sunrise": "06:15",
        "sunset": "18:21"
       },
       {
        "date": "2026-09-26",
-       "max": 28,
+       "max": 29,
        "min": 24,
        "code": 81,
-       "rain": 92,
-       "uv": 8.25,
+       "rain": 95,
+       "uv": 8.45,
        "sunrise": "06:15",
        "sunset": "18:20"
       },
       {
        "date": "2026-09-27",
-       "max": 28,
+       "max": 29,
        "min": 24,
-       "code": 55,
-       "rain": 88,
-       "uv": 6.95,
+       "code": 95,
+       "rain": 92,
+       "uv": 5.9,
        "sunrise": "06:15",
        "sunset": "18:19"
       },
@@ -230,9 +220,9 @@
        "date": "2026-09-28",
        "max": 29,
        "min": 25,
-       "code": 51,
-       "rain": 75,
-       "uv": 8.65,
+       "code": 95,
+       "rain": 78,
+       "uv": 7.9,
        "sunrise": "06:15",
        "sunset": "18:19"
       },
@@ -241,480 +231,480 @@
        "max": 29,
        "min": 25,
        "code": 53,
-       "rain": 75,
-       "uv": 7.75,
+       "rain": 50,
+       "uv": 8.3,
+       "sunrise": "06:14",
+       "sunset": "18:18"
+      },
+      {
+       "date": "2026-09-30",
+       "max": 30,
+       "min": 25,
+       "code": 51,
+       "rain": 60,
+       "uv": 8.85,
        "sunrise": "06:14",
        "sunset": "18:18"
       }
      ]
     },
     "src": "live · Open-Meteo (repo file)",
-    "at": "2026-09-23T06:01:04.368Z",
-    "thb": 0.346971
+    "at": "2026-09-24T06:12:12.248Z",
+    "thb": 0.348479
    },
    "krabi": {
     "data": {
      "provider": "Open-Meteo",
-     "fetchedAt": "2026-09-23T06:01:04.488Z",
+     "fetchedAt": "2026-09-24T06:12:12.306Z",
      "current": {
-      "temp": 27,
-      "feels": 32,
-      "humidity": 96,
-      "wind": 9,
-      "windDir": 289,
-      "rain": 0.8,
-      "cloud": 98,
-      "uv": 1.5,
-      "code": 95,
-      "label": "Thunderstorm",
-      "icon": "⛈️"
+      "temp": 31,
+      "feels": 37,
+      "humidity": 67,
+      "wind": 11,
+      "windDir": 275,
+      "rain": 0,
+      "cloud": 80,
+      "uv": 8.1,
+      "code": 3,
+      "label": "Overcast",
+      "icon": "☁️"
      },
-     "rainChance": 99,
+     "rainChance": 74,
      "hourly": [
       {
        "t": "13:00",
-       "temp": 27,
-       "rain": 98,
-       "code": 95
+       "temp": 31,
+       "rain": 73,
+       "code": 51
       },
       {
        "t": "14:00",
-       "temp": 26,
-       "rain": 99,
-       "code": 95
+       "temp": 29,
+       "rain": 74,
+       "code": 51
       },
       {
        "t": "15:00",
-       "temp": 26,
-       "rain": 99,
-       "code": 81
+       "temp": 27,
+       "rain": 73,
+       "code": 53
       },
       {
        "t": "16:00",
-       "temp": 26,
-       "rain": 98,
-       "code": 55
+       "temp": 25,
+       "rain": 71,
+       "code": 95
       },
       {
        "t": "17:00",
        "temp": 26,
-       "rain": 96,
+       "rain": 66,
        "code": 53
       },
       {
        "t": "18:00",
        "temp": 26,
-       "rain": 93,
+       "rain": 60,
        "code": 51
       },
       {
        "t": "19:00",
-       "temp": 25,
-       "rain": 88,
-       "code": 53
+       "temp": 26,
+       "rain": 51,
+       "code": 51
       },
       {
        "t": "20:00",
-       "temp": 25,
-       "rain": 79,
-       "code": 53
+       "temp": 26,
+       "rain": 39,
+       "code": 3
       },
       {
        "t": "21:00",
-       "temp": 25,
-       "rain": 69,
-       "code": 51
+       "temp": 26,
+       "rain": 25,
+       "code": 3
       },
       {
        "t": "22:00",
-       "temp": 25,
-       "rain": 59,
-       "code": 51
+       "temp": 26,
+       "rain": 14,
+       "code": 3
       },
       {
        "t": "23:00",
-       "temp": 25,
-       "rain": 52,
+       "temp": 26,
+       "rain": 8,
        "code": 3
       },
       {
        "t": "00:00",
-       "temp": 25,
-       "rain": 46,
+       "temp": 26,
+       "rain": 4,
        "code": 3
       },
       {
        "t": "01:00",
-       "temp": 25,
-       "rain": 41,
-       "code": 3
+       "temp": 26,
+       "rain": 4,
+       "code": 51
       },
       {
        "t": "02:00",
        "temp": 25,
-       "rain": 38,
-       "code": 3
+       "rain": 10,
+       "code": 51
       },
       {
        "t": "03:00",
        "temp": 25,
-       "rain": 37,
-       "code": 3
+       "rain": 19,
+       "code": 51
       },
       {
        "t": "04:00",
        "temp": 25,
-       "rain": 37,
-       "code": 51
+       "rain": 25,
+       "code": 3
       },
       {
        "t": "05:00",
        "temp": 25,
-       "rain": 37,
+       "rain": 22,
        "code": 3
       },
       {
        "t": "06:00",
        "temp": 25,
-       "rain": 39,
-       "code": 51
+       "rain": 15,
+       "code": 3
       },
       {
        "t": "07:00",
        "temp": 25,
-       "rain": 43,
-       "code": 51
+       "rain": 12,
+       "code": 3
       },
       {
        "t": "08:00",
        "temp": 26,
-       "rain": 52,
-       "code": 1
+       "rain": 16,
+       "code": 51
       },
       {
        "t": "09:00",
-       "temp": 26,
-       "rain": 63,
-       "code": 53
+       "temp": 28,
+       "rain": 24,
+       "code": 51
       },
       {
        "t": "10:00",
-       "temp": 26,
-       "rain": 71,
-       "code": 95
+       "temp": 29,
+       "rain": 33,
+       "code": 51
       },
       {
        "t": "11:00",
-       "temp": 26,
-       "rain": 73,
-       "code": 53
+       "temp": 29,
+       "rain": 45,
+       "code": 51
       },
       {
        "t": "12:00",
-       "temp": 28,
-       "rain": 72,
+       "temp": 30,
+       "rain": 58,
        "code": 51
       }
      ],
      "daily": [
       {
-       "date": "2026-09-23",
-       "max": 28,
-       "min": 24,
-       "code": 95,
-       "rain": 99,
-       "uv": 4.25,
-       "sunrise": "06:13",
-       "sunset": "18:20"
-      },
-      {
        "date": "2026-09-24",
-       "max": 29,
-       "min": 24,
+       "max": 31,
+       "min": 25,
        "code": 95,
-       "rain": 73,
-       "uv": 1.95,
+       "rain": 74,
+       "uv": 8.95,
        "sunrise": "06:13",
        "sunset": "18:19"
       },
       {
        "date": "2026-09-25",
-       "max": 29,
-       "min": 24,
-       "code": 95,
-       "rain": 90,
-       "uv": 4.5,
-       "sunrise": "06:13",
-       "sunset": "18:18"
-      },
-      {
-       "date": "2026-09-26",
-       "max": 28,
-       "min": 25,
-       "code": 95,
-       "rain": 94,
-       "uv": 8.35,
-       "sunrise": "06:13",
-       "sunset": "18:18"
-      },
-      {
-       "date": "2026-09-27",
-       "max": 27,
-       "min": 25,
-       "code": 80,
-       "rain": 89,
-       "uv": 6.3,
-       "sunrise": "06:13",
-       "sunset": "18:17"
-      },
-      {
-       "date": "2026-09-28",
-       "max": 29,
-       "min": 24,
-       "code": 53,
-       "rain": 76,
-       "uv": 8.2,
-       "sunrise": "06:12",
-       "sunset": "18:17"
-      },
-      {
-       "date": "2026-09-29",
        "max": 30,
-       "min": 24,
-       "code": 51,
-       "rain": 69,
-       "uv": 6.6,
-       "sunrise": "06:12",
-       "sunset": "18:16"
-      }
-     ]
-    },
-    "src": "live · Open-Meteo (repo file)",
-    "at": "2026-09-23T06:01:04.488Z",
-    "thb": 0.346971
-   },
-   "bangkok": {
-    "data": {
-     "provider": "Open-Meteo",
-     "fetchedAt": "2026-09-23T06:01:04.608Z",
-     "current": {
-      "temp": 32,
-      "feels": 38,
-      "humidity": 65,
-      "wind": 6,
-      "windDir": 37,
-      "rain": 0,
-      "cloud": 100,
-      "uv": 8.5,
-      "code": 3,
-      "label": "Overcast",
-      "icon": "☁️"
-     },
-     "rainChance": 100,
-     "hourly": [
-      {
-       "t": "13:00",
-       "temp": 32,
-       "rain": 78,
-       "code": 51
-      },
-      {
-       "t": "14:00",
-       "temp": 28,
-       "rain": 89,
-       "code": 95
-      },
-      {
-       "t": "15:00",
-       "temp": 27,
-       "rain": 97,
-       "code": 95
-      },
-      {
-       "t": "16:00",
-       "temp": 27,
-       "rain": 100,
-       "code": 80
-      },
-      {
-       "t": "17:00",
-       "temp": 27,
-       "rain": 97,
-       "code": 53
-      },
-      {
-       "t": "18:00",
-       "temp": 27,
-       "rain": 90,
-       "code": 51
-      },
-      {
-       "t": "19:00",
-       "temp": 27,
-       "rain": 82,
-       "code": 3
-      },
-      {
-       "t": "20:00",
-       "temp": 26,
-       "rain": 74,
-       "code": 3
-      },
-      {
-       "t": "21:00",
-       "temp": 26,
-       "rain": 67,
-       "code": 3
-      },
-      {
-       "t": "22:00",
-       "temp": 25,
-       "rain": 63,
-       "code": 53
-      },
-      {
-       "t": "23:00",
-       "temp": 25,
-       "rain": 67,
-       "code": 53
-      },
-      {
-       "t": "00:00",
-       "temp": 25,
-       "rain": 75,
-       "code": 51
-      },
-      {
-       "t": "01:00",
-       "temp": 25,
-       "rain": 80,
-       "code": 51
-      },
-      {
-       "t": "02:00",
-       "temp": 24,
-       "rain": 78,
-       "code": 51
-      },
-      {
-       "t": "03:00",
-       "temp": 24,
-       "rain": 72,
-       "code": 51
-      },
-      {
-       "t": "04:00",
-       "temp": 24,
-       "rain": 65,
-       "code": 51
-      },
-      {
-       "t": "05:00",
-       "temp": 24,
-       "rain": 57,
-       "code": 51
-      },
-      {
-       "t": "06:00",
-       "temp": 24,
-       "rain": 49,
-       "code": 3
-      },
-      {
-       "t": "07:00",
-       "temp": 25,
-       "rain": 43,
-       "code": 3
-      },
-      {
-       "t": "08:00",
-       "temp": 26,
-       "rain": 39,
-       "code": 3
-      },
-      {
-       "t": "09:00",
-       "temp": 27,
-       "rain": 38,
-       "code": 51
-      },
-      {
-       "t": "10:00",
-       "temp": 28,
-       "rain": 41,
-       "code": 51
-      },
-      {
-       "t": "11:00",
-       "temp": 28,
-       "rain": 51,
-       "code": 51
-      },
-      {
-       "t": "12:00",
-       "temp": 29,
-       "rain": 66,
-       "code": 51
-      }
-     ],
-     "daily": [
-      {
-       "date": "2026-09-23",
-       "max": 32,
        "min": 25,
        "code": 95,
-       "rain": 100,
-       "uv": 8.7,
-       "sunrise": "06:07",
-       "sunset": "18:13"
-      },
-      {
-       "date": "2026-09-24",
-       "max": 29,
-       "min": 24,
-       "code": 95,
-       "rain": 98,
-       "uv": 8.25,
-       "sunrise": "06:07",
-       "sunset": "18:12"
-      },
-      {
-       "date": "2026-09-25",
-       "max": 27,
-       "min": 24,
-       "code": 95,
-       "rain": 100,
-       "uv": 3.65,
-       "sunrise": "06:07",
-       "sunset": "18:12"
+       "rain": 88,
+       "uv": 7,
+       "sunrise": "06:13",
+       "sunset": "18:18"
       },
       {
        "date": "2026-09-26",
-       "max": 28,
+       "max": 29,
        "min": 24,
-       "code": 95,
-       "rain": 100,
-       "uv": 2.4,
-       "sunrise": "06:07",
-       "sunset": "18:11"
+       "code": 80,
+       "rain": 96,
+       "uv": 8.2,
+       "sunrise": "06:13",
+       "sunset": "18:18"
       },
       {
        "date": "2026-09-27",
        "max": 28,
        "min": 25,
        "code": 81,
-       "rain": 93,
-       "uv": 3.1,
+       "rain": 96,
+       "uv": 7.85,
+       "sunrise": "06:13",
+       "sunset": "18:17"
+      },
+      {
+       "date": "2026-09-28",
+       "max": 29,
+       "min": 25,
+       "code": 95,
+       "rain": 82,
+       "uv": 7.85,
+       "sunrise": "06:12",
+       "sunset": "18:17"
+      },
+      {
+       "date": "2026-09-29",
+       "max": 31,
+       "min": 24,
+       "code": 53,
+       "rain": 71,
+       "uv": 8.6,
+       "sunrise": "06:12",
+       "sunset": "18:16"
+      },
+      {
+       "date": "2026-09-30",
+       "max": 30,
+       "min": 24,
+       "code": 53,
+       "rain": 92,
+       "uv": 8.8,
+       "sunrise": "06:12",
+       "sunset": "18:16"
+      }
+     ]
+    },
+    "src": "live · Open-Meteo (repo file)",
+    "at": "2026-09-24T06:12:12.306Z",
+    "thb": 0.348479
+   },
+   "bangkok": {
+    "data": {
+     "provider": "Open-Meteo",
+     "fetchedAt": "2026-09-24T06:12:12.360Z",
+     "current": {
+      "temp": 28,
+      "feels": 33,
+      "humidity": 84,
+      "wind": 9,
+      "windDir": 340,
+      "rain": 0.2,
+      "cloud": 100,
+      "uv": 6.35,
+      "code": 53,
+      "label": "Drizzle",
+      "icon": "🌦️"
+     },
+     "rainChance": 100,
+     "hourly": [
+      {
+       "t": "13:00",
+       "temp": 28,
+       "rain": 98,
+       "code": 53
+      },
+      {
+       "t": "14:00",
+       "temp": 26,
+       "rain": 100,
+       "code": 81
+      },
+      {
+       "t": "15:00",
+       "temp": 27,
+       "rain": 99,
+       "code": 53
+      },
+      {
+       "t": "16:00",
+       "temp": 26,
+       "rain": 96,
+       "code": 55
+      },
+      {
+       "t": "17:00",
+       "temp": 27,
+       "rain": 97,
+       "code": 51
+      },
+      {
+       "t": "18:00",
+       "temp": 26,
+       "rain": 98,
+       "code": 80
+      },
+      {
+       "t": "19:00",
+       "temp": 25,
+       "rain": 98,
+       "code": 80
+      },
+      {
+       "t": "20:00",
+       "temp": 25,
+       "rain": 97,
+       "code": 80
+      },
+      {
+       "t": "21:00",
+       "temp": 25,
+       "rain": 95,
+       "code": 80
+      },
+      {
+       "t": "22:00",
+       "temp": 24,
+       "rain": 94,
+       "code": 80
+      },
+      {
+       "t": "23:00",
+       "temp": 24,
+       "rain": 94,
+       "code": 81
+      },
+      {
+       "t": "00:00",
+       "temp": 24,
+       "rain": 95,
+       "code": 55
+      },
+      {
+       "t": "01:00",
+       "temp": 24,
+       "rain": 96,
+       "code": 53
+      },
+      {
+       "t": "02:00",
+       "temp": 24,
+       "rain": 97,
+       "code": 80
+      },
+      {
+       "t": "03:00",
+       "temp": 24,
+       "rain": 97,
+       "code": 81
+      },
+      {
+       "t": "04:00",
+       "temp": 24,
+       "rain": 98,
+       "code": 81
+      },
+      {
+       "t": "05:00",
+       "temp": 24,
+       "rain": 98,
+       "code": 81
+      },
+      {
+       "t": "06:00",
+       "temp": 24,
+       "rain": 98,
+       "code": 82
+      },
+      {
+       "t": "07:00",
+       "temp": 24,
+       "rain": 98,
+       "code": 95
+      },
+      {
+       "t": "08:00",
+       "temp": 24,
+       "rain": 99,
+       "code": 95
+      },
+      {
+       "t": "09:00",
+       "temp": 25,
+       "rain": 99,
+       "code": 80
+      },
+      {
+       "t": "10:00",
+       "temp": 25,
+       "rain": 100,
+       "code": 53
+      },
+      {
+       "t": "11:00",
+       "temp": 26,
+       "rain": 100,
+       "code": 53
+      },
+      {
+       "t": "12:00",
+       "temp": 27,
+       "rain": 100,
+       "code": 51
+      }
+     ],
+     "daily": [
+      {
+       "date": "2026-09-24",
+       "max": 28,
+       "min": 24,
+       "code": 95,
+       "rain": 100,
+       "uv": 8.1,
+       "sunrise": "06:07",
+       "sunset": "18:12"
+      },
+      {
+       "date": "2026-09-25",
+       "max": 27,
+       "min": 24,
+       "code": 95,
+       "rain": 100,
+       "uv": 1.8,
+       "sunrise": "06:07",
+       "sunset": "18:12"
+      },
+      {
+       "date": "2026-09-26",
+       "max": 26,
+       "min": 24,
+       "code": 82,
+       "rain": 100,
+       "uv": 1,
+       "sunrise": "06:07",
+       "sunset": "18:11"
+      },
+      {
+       "date": "2026-09-27",
+       "max": 28,
+       "min": 24,
+       "code": 81,
+       "rain": 98,
+       "uv": 3.35,
        "sunrise": "06:07",
        "sunset": "18:10"
       },
       {
        "date": "2026-09-28",
-       "max": 29,
+       "max": 28,
        "min": 26,
        "code": 55,
-       "rain": 97,
-       "uv": 7.15,
+       "rain": 96,
+       "uv": 8.55,
        "sunrise": "06:07",
        "sunset": "18:10"
       },
@@ -723,16 +713,26 @@
        "max": 30,
        "min": 26,
        "code": 55,
-       "rain": 81,
-       "uv": 8.4,
+       "rain": 77,
+       "uv": 7.4,
        "sunrise": "06:07",
        "sunset": "18:09"
+      },
+      {
+       "date": "2026-09-30",
+       "max": 31,
+       "min": 25,
+       "code": 95,
+       "rain": 61,
+       "uv": 6.35,
+       "sunrise": "06:07",
+       "sunset": "18:08"
       }
      ]
     },
     "src": "live · Open-Meteo (repo file)",
-    "at": "2026-09-23T06:01:04.608Z",
-    "thb": 0.346971
+    "at": "2026-09-24T06:12:12.360Z",
+    "thb": 0.348479
    }
   }
  }
